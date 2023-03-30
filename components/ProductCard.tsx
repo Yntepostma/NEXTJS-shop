@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Product } from "@/pages";
 
 type ProductCardProps = {
@@ -8,12 +9,17 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="my-4 border w-80">
+    <div className="border shadow w-80 hover:shadow-xl">
       <Link href={`/products/${product.id}`}>
-        <img src="https://www.dummyimage.com/320x240" alt="dummy image" />
-        <div className="flex justify-between p-2">
+        <Image
+          src={`http://localhost:1337${product.picture.url}`}
+          width={320}
+          height={240}
+          alt=""
+        />
+        <div className="flex items-baseline justify-between p-2">
           <h2 className="text-lg font-bold">{product.title}</h2>
-          <span>$ {product.price}</span>
+          <span>$ {product.price.toFixed(2)}</span>
         </div>
       </Link>
     </div>

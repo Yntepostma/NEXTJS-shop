@@ -4,6 +4,7 @@ import { getProducts } from "../../lib/products";
 import { Inter } from "next/font/google";
 import Title from "../../components/Title";
 import ProductCard from "../../components/ProductCard";
+import Page from "../../components/Page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,24 +40,16 @@ export default function Home({ products }: Products) {
   console.log("[HomePage]: Render");
   console.log("products", products);
   return (
-    <>
-      <Head>
-        <title>Next Shop</title>
-      </Head>
-
-      <main className="px-6 py-4">
-        <Title>Next Shop</Title>
-
-        <ul>
-          {products.map((product) => {
-            return (
-              <ul key={product.id}>
-                <ProductCard product={product} />
-              </ul>
-            );
-          })}
-        </ul>
-      </main>
-    </>
+    <Page title="Indoor Plants">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {products.map((product) => {
+          return (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          );
+        })}
+      </ul>
+    </Page>
   );
 }

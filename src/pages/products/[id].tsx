@@ -1,8 +1,9 @@
 import { getProduct, getProducts } from "../../../lib/products";
+import Image from "next/image";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { Product } from "..";
-import Title from "../../../components/Title";
+import Page from "../../../components/Page";
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -42,21 +43,24 @@ export const getStaticProps: GetStaticProps<
 };
 
 const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
-  console.log("process env", process.env.REVALIDATE_SECONDS);
   return (
-    <>
-      <Title>{product.title}</Title>
-      <div className="flex space-x-2">
-        <img
-          className="ml-2 rounded"
-          width={product.picture.width}
-          height={product.picture.height}
-          src={`http://localhost:1337${product.picture.url}`}
-          alt={product.picture.alternativeText}
-        />
-        <p>{product.description}</p>
+    <Page title={product.title}>
+      <div className="flex flex-col lg:flex-row ">
+        <div>
+          <Image
+            className="rounded shadow"
+            width={640}
+            height={480}
+            src={`http://localhost:1337${product.picture.url}`}
+            alt={product.picture.alternativeText}
+          />
+        </div>
+        <div className="flex flex-col flex-1 gap-4 lg:ml-4">
+          <p className="text-sm">{product.description}</p>
+          <p className="text-lg font-bold">$ {product.price.toFixed(2)}</p>
+        </div>
       </div>
-    </>
+    </Page>
   );
 };
 
